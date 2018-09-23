@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Categories } from '../../models/categories';
 import { CategoriesService } from '../../services/categories.service';
 import { NgForm } from '@angular/forms';
-import { CategoriesFormComponent } from '../categories/categories-form.component'; 
+import { CategoriesFormComponent } from '../categories/categories-form.component';
 
 @Component({
   selector: 'app-categories-grid',
@@ -10,24 +10,30 @@ import { CategoriesFormComponent } from '../categories/categories-form.component
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesGridComponent implements OnInit {
+  // Define decorator for two component communication
   @ViewChild(CategoriesFormComponent) formCateg: CategoriesFormComponent;
-
+  // Declares the var count the amount of record in the table
   count = 0;
   constructor(public categoriesService: CategoriesService) {
+    // Assign new model class the categories
     this.categoriesService.selectedCategories = new Categories();
-   }
+  }
+  // Define struct data
   categories: Categories = {
     _id : null,
     name : ''
   };
   ngOnInit() {
+    // Call the function to the obtain all category records
     this.getCategories();
   }
+
   selecciona(categories: any) {
-   // this.Datacategory.emit(categories);
+    // Select and send the item to another function of another component
     this.formCateg.recibeItem(categories);
   }
   addCategories(form: NgForm) {
+    // Add new categories
     if (form.value._id == null) {
       this.categoriesService.postCategories(form.value)
         .subscribe(res => {
@@ -47,6 +53,7 @@ export class CategoriesGridComponent implements OnInit {
     form.value._id = null;
   }
   getCategories() {
+    // Search all categories
     this.categoriesService.getCategories()
       .subscribe(res => {
         this.categoriesService.categories = res as Categories[];
@@ -55,16 +62,20 @@ export class CategoriesGridComponent implements OnInit {
       });
   }
   cantReg(data) {
+    // Get registration amount the consult
     this.count = data.length;
   }
   resetForm(form?: NgForm) {
+    // Reset Form
      form.reset();
       this.categoriesService.selectedCategories = new Categories();
   }
   editCategories(categories: Categories) {
+    // Assign the item to edit the categories
     this.categories = categories;
   }
-  deleteEmployee(categories: Categories) {
+  deleteCategories(categories: Categories) {
+    // Delete categories
     this.categoriesService.deleteCategories(categories._id)
     .subscribe(res => {
       this.getCategories();

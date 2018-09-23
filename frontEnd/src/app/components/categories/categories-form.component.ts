@@ -9,43 +9,51 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CategoriesFormComponent implements OnInit {
     @Input() dataItem;
     registerForm: FormGroup;
+    loading: boolean;
     submitted = false;
     errorManual = false;
     constructor(private categoriesService: CategoriesService, private formBuilder: FormBuilder) { }
- 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
             _id: [''],
             categoryName: ['', Validators.required]
         });
+        this.loading = false;
     }
-    
     // convenience getter for easy access to form fields
-    get f() { return this.registerForm.controls; }
- 
+    get f() {
+        return this.registerForm.controls;
+    }
+    // Send to save
     onSubmit() {
         this.submitted = true;
         this.errorManual = false;
 
         console.log(this.registerForm.controls.categoryName);
 
-        if(this.registerForm.controls.categoryName.value == ''){
-          console.log('vacio');
-          this.errorManual = true;
-          return;
+        if (this.registerForm.controls.categoryName.value === '') {
+            console.log('vacio');
+            this.errorManual = true;
+            return;
         }
         // stop here if form is invalid
         if (this.registerForm.invalid) {
             return;
         }
- 
-        alert('SUCCESS!! :-)')
+        alert('SUCCESS!! :-)');
     }
 
-    recibeItem(item){
-      this.registerForm = this.formBuilder.group({
+    recibeItem(item) {
+        this.registerForm = this.formBuilder.group({
         _id: [item._id],
         categoryName: [item.name]
-    });
+        });
+    }
+    search() {
+        console.log(this.registerForm.controls.categoryName.value);
+        /*this.categoriesService.getlikeCategories(item)
+        .subscribe(res => {
+            console.log(res);
+        });*/
     }
 }

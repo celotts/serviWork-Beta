@@ -41,4 +41,17 @@ categoryCtrl.delCategory = async (req, res, next) => {
     });
 }
 
+categoryCtrl.getlikeCategorys =  (req, res, next) => {
+    var regex = new RegExp(req.params.name, "i")
+    ,   query = { name: regex };
+
+    const category = Category.find(query, function(err, categories) {
+        if (err) {
+            res.json(err);
+        }
+
+        res.json(categories);
+    });
+    //res.json(category);
+}
 module.exports = categoryCtrl;

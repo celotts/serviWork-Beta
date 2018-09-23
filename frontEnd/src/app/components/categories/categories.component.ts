@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class CategoriesComponent implements OnInit {
   dataItem = [];
+  // Define structure
   categories: Categories = {
     _id : null,
     name : ''
