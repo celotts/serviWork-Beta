@@ -1,0 +1,27 @@
+<!-- main app container -->
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <input type="hidden" [ngModel] = 'dataItem._id' formControlName="_id">
+    </div>
+    <div class="row">    
+        <div class="form-group col-md-10">
+            <label>Nombre de la categoría</label>
+            <input type="text" [(ngModel)]="dataItem.name" formControlName="categoriName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoriName.errors }"/>
+            <div *ngIf="submitted && f.categoriName.errors" class="invalid-feedback">
+                <div *ngIf="f.categoriName.errors.required">Nombre de la Categoría es requerido</div>
+            </div>
+        </div>
+        <div class="form-group col-md-2">
+            <a class="btn btn-light" style = "color:blue; margin-left: 5px">   
+                <i class="material-icons">      
+                    add_circle
+                </i>
+            </a>
+            <a [disabled]="loading" class="btn btn-success" style = "color:white; margin-left: 5px">   
+                <i class="material-icons">      
+                    save
+                </i>
+            </a>
+        </div>
+    </div>
+</form>

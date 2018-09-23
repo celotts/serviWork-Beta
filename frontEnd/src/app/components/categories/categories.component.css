@@ -1,0 +1,17 @@
+.font-table-catgorie{
+    color: #000;
+    background: #ccc; 
+    padding-top: 5px; 
+    padding-bottom: 5px
+}
+
+.icon-delete{
+    color: red;
+}
+.margin-into-icons{
+    margin-left: 0px
+}
+.icon-edit{
+    color: blue;
+    
+}
