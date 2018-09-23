@@ -1,8 +1,8 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Categories } from '../../models/categories';
 import { CategoriesService } from '../../services/categories.service';
 import { NgForm } from '@angular/forms';
-
+import { CategoriesFormComponent } from '../categories/categories-form.component'; 
 
 @Component({
   selector: 'app-categories-grid',
@@ -10,7 +10,8 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesGridComponent implements OnInit {
-  @Output() Datacategory = new EventEmitter<any>();
+  @ViewChild(CategoriesFormComponent) formCateg: CategoriesFormComponent;
+
   count = 0;
   constructor(public categoriesService: CategoriesService) {
     this.categoriesService.selectedCategories = new Categories();
@@ -23,7 +24,8 @@ export class CategoriesGridComponent implements OnInit {
     this.getCategories();
   }
   selecciona(categories: any) {
-    this.Datacategory.emit(categories);
+   // this.Datacategory.emit(categories);
+    this.formCateg.recibeItem(categories);
   }
   addCategories(form: NgForm) {
     if (form.value._id == null) {

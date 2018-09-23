@@ -7,48 +7,45 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './categories-form/categories-form.html'
 })
 export class CategoriesFormComponent implements OnInit {
-  @Input() dataItem;
-  registerForm: FormGroup;
-  submitted = false;
-  categories: Categories = {
-    _id : null,
-    name : ''
-  };  constructor(private categoriesService: CategoriesService, private formBuilder: FormBuilder) { }
+    @Input() dataItem;
+    registerForm: FormGroup;
+    submitted = false;
+    errorManual = false;
+    constructor(private categoriesService: CategoriesService, private formBuilder: FormBuilder) { }
+ 
+    ngOnInit() {
+        this.registerForm = this.formBuilder.group({
+            _id: [''],
+            categoryName: ['', Validators.required]
+        });
+    }
+    
+    // convenience getter for easy access to form fields
+    get f() { return this.registerForm.controls; }
+ 
+    onSubmit() {
+        this.submitted = true;
+        this.errorManual = false;
 
-  ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      _id: [''],
-      categoriName: ['', Validators.required]
-  });
-  }
-  // convenience getter for easy access to form fields
-  get f() {
-    return this.registerForm.controls;
-  }
-  onSubmit() {
-      this.submitted = true;
-      // stop here if form is invalid
-      if (this.registerForm.invalid) {
+        console.log(this.registerForm.controls.categoryName);
+
+        if(this.registerForm.controls.categoryName.value == ''){
+          console.log('vacio');
+          this.errorManual = true;
           return;
-      }
+        }
+        // stop here if form is invalid
+        if (this.registerForm.invalid) {
+            return;
+        }
+ 
+        alert('SUCCESS!! :-)')
+    }
 
-      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value));
-      this.registerForm.reset();
-  }
-  submitForm(): void {
-  }
-
-  onCategory(categoriesData: any) {
-    this.categories = categoriesData;
-  }
-  change(data: any) {
-    console.log(data);
-    this.registerForm = this.formBuilder.group({
-      catgoriName: data
+    recibeItem(item){
+      this.registerForm = this.formBuilder.group({
+        _id: [item._id],
+        categoryName: [item.name]
     });
-  }
-  log(name) {
-    console.log('aquiiii' + name);
-  }
-
+    }
 }

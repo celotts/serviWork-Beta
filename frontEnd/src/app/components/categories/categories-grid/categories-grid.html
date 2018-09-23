@@ -1,11 +1,11 @@
-
+<app-categories-form></app-categories-form>
 <div class="row" *ngFor = "let item of categoriesService.categories" (click)="selecciona(item)"> 
-    <div class="col-md-10"><hr></div>
+    
     <div  class="col-md-10">
         {{item.name}}
     </div>
     <div  class="col-md-2">
-        <a class="btn btn-light margin-into-icons">
+        <a class="btn btn-light margin-into-icons" (click)="selecciona(item)">
             <i class="material-icons icon-edit">
                 edit
             </i>

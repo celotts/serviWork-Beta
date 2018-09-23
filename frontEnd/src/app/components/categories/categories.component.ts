@@ -17,9 +17,4 @@ export class CategoriesComponent implements OnInit {
   };
   constructor() {}
   ngOnInit() {}
-
-  selecciona(item) {
-    console.log('dsfadsasd');
-    this.categories = item;
-  }
 }
