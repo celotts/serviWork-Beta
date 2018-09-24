@@ -10,7 +10,7 @@
                 edit
             </i>
         </a>  
-        <a class="btn btn-light">
+        <a class="btn btn-light" (click)="delete(item)">
             <i class="material-icons icon-delete">
                 delete
             </i>
@@ -24,7 +24,7 @@
         <a class="page-link" href="#" tabindex="-1">Anterior</a>
       </li>
       <li class="page-item text-right count" style="margin: 10px">
-        Reg. ({{count}})
+        Reg. ({{categoriesService?.categories?.length}})
       </li>
       <li class="page-item">
         <a class="page-link" href="#">Siguiente</a>

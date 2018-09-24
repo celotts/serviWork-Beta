@@ -28,9 +28,8 @@ categoryCtrl.editCategory = async (req, res, next) => {
         name: req.body.name
     };
     await Category.findByIdAndUpdate(id, {$set: category}, {new : true});
-
     res.json({
-        status : 'Category update'
+        status : 'Category update'+req.paramss
     });
 }
 

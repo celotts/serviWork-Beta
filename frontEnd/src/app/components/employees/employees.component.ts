@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+/*import { Component, OnInit } from '@angular/core';
 import {EmployeeService} from '../../services/employee.service';
 import { Employee } from '../../models/employee';
 import { NgForm } from '@angular/forms';
 
-
-// tslint:disable-next-line:comment-format
-//Declarar variablse
-declare var M: any;
 // component
 @Component({
   selector: 'app-employees',
@@ -27,7 +23,7 @@ export class EmployeesComponent implements OnInit {
   constructor(public employeeService: EmployeeService) {
     this.employeeService.selectedEmployee = new Employee();
     console.log(employeeService.selectedEmployee);
-   }
+  }
 
   ngOnInit() {
     this.getEmployee();
@@ -38,7 +34,6 @@ export class EmployeesComponent implements OnInit {
         .subscribe(res => {
           this.resetForm(form);
           this.getEmployee();
-          M.toast({html: 'Save Successfuly'});
           console.log(res);
       });
     }
@@ -47,7 +42,6 @@ export class EmployeesComponent implements OnInit {
         .subscribe(res => {
           this.resetForm(form);
           this.getEmployee();
-          M.toast({html: 'Update Successfuly'});
           console.log(res);
         });
     }
@@ -62,7 +56,7 @@ export class EmployeesComponent implements OnInit {
       });
   }
   resetForm(form?: NgForm) {
-     form.reset();
+      form.reset();
       this.employeeService.selectedEmployee = new Employee();
   }
   editEmployee(employee: Employee) {
@@ -72,8 +66,8 @@ export class EmployeesComponent implements OnInit {
     this.employeeService.deleteEmployee(employee._id)
     .subscribe(res => {
       this.getEmployee();
-      M.toast({html: 'Delete Successfuly'});
       console.log(res);
     });
   }
 }
+*/

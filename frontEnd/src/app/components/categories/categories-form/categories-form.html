@@ -3,13 +3,17 @@
     <div class="row" style="margin-top:20px">    
         <div class="form-group col-md-10" >
             <input type="hidden" formControlName="_id" class="form-control" />
-            <label >Nombre de la categoría</label>
-            <input type="text" formControlName="categoryName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryName.errors }" />
+            <label >Nombre de la categoría</label> <b [ngStyle]="{'color': color,  'font-weight': 'bold'}">{{state}}</b>
+            <input type="text" (onchange)="changeInput()" formControlName="categoryName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryName.errors }" />
             <div *ngIf="submitted && f.categoryName.errors && !errorManual" class="invalid-feedback">
-                <div *ngIf="f.categoryName.errors.required">Requiere el nombre de la categoría</div>
+                <div *ngIf="f.categoryName.errors.required" >
+                    <div class="alert alert-danger" role="alert">
+                        Requiere el nombre de la categoría
+                    </div>    
+                </div>
             </div>
-            <div *ngIf="submitted && errorManual" class="invalid-feedback">
-                <div>Requiere el nombre de la categoría</div>
+            <div *ngIf="errorManual == true" class="invalid-feedback">
+                    <div class="alert alert-danger" role="alert">Requiere el nombre de la categoría</div>
             </div>
         </div>
         <div class="form-group col-md-2">
@@ -18,7 +22,7 @@
                     search
                 </i>
             </button>
-            <button class="btn btn-primary" type='button' data-toggle="tooltip" data-placement="top" title="Nuevo registro">   
+            <button class="btn btn-primary" type='button' (click)="reset()" data-toggle="tooltip" data-placement="top" title="Nuevo registro">   
                 <i class="material-icons">      
                     add_circle
                 </i>
@@ -26,6 +30,11 @@
             <button class="btn btn-success">
                 <i class="material-icons" data-toggle="tooltip" data-placement="top" title="Guardar información">      
                     save
+                </i>
+            </button>
+            <button class="btn btn-info" type='button' data-toggle="tooltip" (click)="reset()" data-placement="top" title="Resetear Formulario">   
+                <i class="material-icons">      
+                    clear
                 </i>
             </button>
         </div>

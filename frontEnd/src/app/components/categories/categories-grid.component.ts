@@ -32,15 +32,14 @@ export class CategoriesGridComponent implements OnInit {
     // Select and send the item to another function of another component
     this.formCateg.recibeItem(categories);
   }
+  delete(categories: any) {
+    // Select and send the item to another function of another component
+    this.categoriesService.deleteCategories(categories._id);
+  }
   addCategories(form: NgForm) {
     // Add new categories
     if (form.value._id == null) {
-      this.categoriesService.postCategories(form.value)
-        .subscribe(res => {
-          this.resetForm(form);
-          this.getCategories();
-          console.log(res);
-        });
+      this.categoriesService.postCategories(form.value);
     }
     if (form.value._id != null ) {
       this.categoriesService.putCategories(form.value)
@@ -54,20 +53,11 @@ export class CategoriesGridComponent implements OnInit {
   }
   getCategories() {
     // Search all categories
-    this.categoriesService.getCategories()
-      .subscribe(res => {
-        this.categoriesService.categories = res as Categories[];
-        this.cantReg(this.categoriesService.categories);
-        console.log(res);
-      });
-  }
-  cantReg(data) {
-    // Get registration amount the consult
-    this.count = data.length;
+    this.categoriesService.getCategories();
   }
   resetForm(form?: NgForm) {
-    // Reset Form
-     form.reset();
+      // Reset Form
+      form.reset();
       this.categoriesService.selectedCategories = new Categories();
   }
   editCategories(categories: Categories) {
