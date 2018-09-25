@@ -64,12 +64,4 @@ export class CategoriesGridComponent implements OnInit {
     // Assign the item to edit the categories
     this.categories = categories;
   }
-  deleteCategories(categories: Categories) {
-    // Delete categories
-    this.categoriesService.deleteCategories(categories._id)
-    .subscribe(res => {
-      this.getCategories();
-      console.log(res);
-    });
-  }
 }

@@ -5,8 +5,8 @@ const categoryCtrl = require('../controllers/category.controller');
 
 router.get('/', categoryCtrl.getCategorys);
 router.post('/', categoryCtrl.crateCategory);
-router.get('/:id', categoryCtrl.getCategoryId);
+//router.get('/:id', categoryCtrl.getCategoryId);
 router.put('/:id', categoryCtrl.editCategory);
-router.delete('/:id', categoryCtrl.delCategory);
+router.delete('/:id', categoryCtrl.getCategoryId);
 router.get('/like/:name', categoryCtrl.getlikeCategorys);
 module.exports = router;

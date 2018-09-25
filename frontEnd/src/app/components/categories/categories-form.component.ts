@@ -22,9 +22,9 @@ export class CategoriesFormComponent implements OnInit {
             _id: [''],
             categoryName: ['', Validators.required]
         });
-        this.color_default = "#1B3D97"
+        this.color_default = '#1B3D97';
         this.loading = false;
-        this.state = " (Nuevo) ";
+        this.state = ' (Nuevo) ';
         this.color = this.color_default;
     }
     // convenience getter for easy access to form fields
@@ -46,34 +46,37 @@ export class CategoriesFormComponent implements OnInit {
         if (this.registerForm.invalid) {
             return;
         }
-        this.categories= {
+        this.categories = {
             _id: this.registerForm.value._id,
             name: this.registerForm.value.categoryName
-        }
-        if(this.state == " (Nuevo) ") {
-            console.log(this.categories);
+        };
+        // tslint:disable-next-line:quotemark
+        if (this.state === " (Nuevo) ") {
             this.categoriesService.postCategories(this.categories);
             this.reset();
         }
-        if(this.state == " (Editar) ") {
-            console.log("edit");
+        if (this.state === ' (Editar) ') {
             this.categoriesService.putCategories(this.categories);
         }
-        //alert('SUCCESS!! :-)');
-        
     }
     recibeItem(item) {
-        this.state = " (Editar) ";
-        this.color = "#73C6B6"
+        this.state = ' (Editar) ';
+        this.color = '#73C6B6';
         this.registerForm = this.formBuilder.group({
             _id: [item._id],
             categoryName: [item.name]
         });
     }
     search() {
-        this.state = " (Buscar) ";
-        this.color = "#229954";
+        this.state = ' (Buscar) ';
+        this.color = '#229954';
         this.categoriesService.getlikeCategories(this.registerForm.controls.categoryName.value);
+        this.categories = {
+            _id: this.registerForm.value._id,
+            name: this.registerForm.value.categoryName
+        };
+        // tslint:disable-next-line:quotemark
+        this.categoriesService.putCategories(this.categories);
     }
     reset() {
         this.registerForm = this.formBuilder.group({
@@ -81,11 +84,7 @@ export class CategoriesFormComponent implements OnInit {
             categoryName: ['', Validators.required]
         });
         this.search();
-        this.state = " (Nuevo) ";
+        this.state = ' (Nuevo) ';
         this.color = this.color_default;
-    }
-    delete(){
-        this.color = "red";
-        this.state = " (Eliminar) ";
     }
 }

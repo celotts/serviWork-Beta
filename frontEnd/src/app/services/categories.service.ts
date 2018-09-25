@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
+// import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Categories } from '../models/categories';
-import { HttpClient } from '@angular/common/http';
 
+/*const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};*/
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +27,7 @@ export class CategoriesService {
   }
   // create new category
   postCategories(categories: Categories) {
-    console.log("Starts record saving process Categories");
+    console.log('Starts record saving process Categories');
     this.http.post(this.URL_API + `/`, categories)
     .subscribe(res => {
       this.getCategories();
@@ -36,23 +40,21 @@ export class CategoriesService {
   }
   // delete category
   deleteCategories(_id: string) {
-    console.log(_id+this.URL_API);
     return this.http.delete(this.URL_API + `/${_id}`);
   }
   // Get all category
   getlikeCategories(categories: string) {
     if (categories === '') {
-      this.http.get(this.URL_API)
-        .subscribe(res => {
-          this.categories = res as Categories[];
-          console.log(res);
-      });
+      this.getQuery(this.URL_API);
     } else {
-      this.http.get(this.URL_API_LIKE + `/${categories}`)
+      this.getQuery(this.URL_API_LIKE + `/${categories}`);
+    }
+  }
+  getQuery(exec) {
+    this.http.get(exec)
         .subscribe(res => {
           this.categories = res as Categories[];
           console.log(res);
-      });
-    }
+    });
   }
 }
