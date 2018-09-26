@@ -1,12 +1,13 @@
 <!-- main app container -->
 <div class="container">
     <div class="jumbotron">
-        <div class="row">
+        <div class="row" >
             <div class="col-md-10 offset-md-1">
                 <h2>Categorías</h2>
             </div>
             <div class="col-md-10 offset-md-1 baseGrid">
                 <app-categories-grid  ></app-categories-grid>
+                <app-paginations [cantReg]="categoriesService.categories"></app-paginations>
             </div>
         </div>
 

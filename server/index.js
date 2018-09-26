@@ -8,10 +8,13 @@ const { mongoose } = require('./databae');
 //Setting
 app.set('port', process.env.PORT || 3000);
 
+const hostname = 'localhost';
+const porDb = '4200';
+
 //Middlewares
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors({origin: 'http://localhost:4200'}));
+app.use(cors({origin: `http://${hostname}:${porDb}`}));
 
 // Routers
 app.use('/api/employees', require('./routes/employee.routes'));

@@ -25,15 +25,18 @@
             <input type="hidden" formControlName="_id" class="form-control" />
             <label >Nombre de la categoría</label> <b [ngStyle]="{'color': color,  'font-weight': 'bold'}">{{state}}</b>
             <input type="text" formControlName="categoryName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryName.errors }" />
-            <div *ngIf="submitted && f.categoryName.errors && !errorManual" class="invalid-feedback">
+            <div *ngIf="f.categoryName.touched && submitted && f.categoryName.errors && !errorManual" class="invalid-feedback">
                 <div *ngIf="f.categoryName.errors.required" >
                     <div class="alert alert-danger" role="alert">
-                        Requiere el nombre de la categoría
+                        Requiere el nombre de la categoría 1
                     </div>    
                 </div>
             </div>
             <div *ngIf="errorManual == true" class="invalid-feedback">
-                    <div class="alert alert-danger" role="alert">Requiere el nombre de la categoría</div>
+                    <div class="alert alert-danger" role="alert">Requiere el nombre de la categoría </div>
+            </div>
+            <div *ngIf="errorSave == true" class="invalid-feedback">
+                <div class="alert alert-danger" role="alert">Solo se puede guardar la información cuando el estado es (Nuevo) o (Editar)</div>
             </div>
         </div>
         <div class="form-group col-md-2 " style = "margin-top: 30px" >

@@ -10,6 +10,8 @@ import { CategoriesGridComponent } from './components/categories/categories-grid
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { CategoriesFormComponent } from './components/categories/categories-form.component';
+import { PaginationsComponent } from './components/paginations/paginations.component';
+import { PaginationsService } from './services/paginations.service';
 
 registerLocaleData(en);
 
@@ -18,7 +20,8 @@ registerLocaleData(en);
     AppComponent,
     CategoriesComponent,
     CategoriesGridComponent,
-    CategoriesFormComponent
+    CategoriesFormComponent,
+    PaginationsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     BrowserAnimationsModule
   ],
-  providers: [CategoriesService],
+  providers: [CategoriesService, PaginationsService],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
 })

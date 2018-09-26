@@ -3,7 +3,8 @@ const Category = require('../models/category');
 const categoryCtrl = {};
 
 categoryCtrl.getCategorys = async (req, res, next) => {
-    const CategoryData = await Category.find();
+    //(null,null,{skip:2,limit: 2})
+    const CategoryData = await Category.find().sort({ "name": 1 })
      res.json(CategoryData);
 }
 
@@ -23,10 +24,6 @@ categoryCtrl.getCategoryId = async (req, res, next) => {
 }
 
 categoryCtrl.editCategory = async (req, res, next) => {
-    res.json({
-        status : 'Category update'+req.params
-    });
-    return;
     const { id } = req.params;
     const category = {
         name: req.body.name

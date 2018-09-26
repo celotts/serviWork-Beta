@@ -27,11 +27,17 @@ export class CategoriesGridComponent implements OnInit {
     // Call the function to the obtain all category records
     this.getCategories();
   }
-
+  /**
+  * ----------------------------------------------
+  * Comunication to other component
+  */
   selecciona(categories: any) {
     // Select and send the item to another function of another component
     this.formCateg.recibeItem(categories);
   }
+  /**
+  * ----------------------------------------------
+ */
   delete(categories: any) {
     // Select and send the item to another function of another component
     this.categoriesService.deleteCategories(categories._id);
@@ -42,14 +48,9 @@ export class CategoriesGridComponent implements OnInit {
       this.categoriesService.postCategories(form.value);
     }
     if (form.value._id != null ) {
-      this.categoriesService.putCategories(form.value)
-        .subscribe(res => {
-          this.resetForm(form);
-          this.getCategories();
-          console.log(res);
-        });
+      this.categoriesService.putCategories(form.value);
+      form.value._id = null;
     }
-    form.value._id = null;
   }
   getCategories() {
     // Search all categories

@@ -16,6 +16,6 @@ export class CategoriesComponent implements OnInit {
     _id : null,
     name : ''
   };
-  constructor() {}
+  constructor (public categoriesService: CategoriesService) {}
   ngOnInit() {}
 }

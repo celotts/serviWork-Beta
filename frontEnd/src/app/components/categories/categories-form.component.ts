@@ -12,6 +12,7 @@ export class CategoriesFormComponent implements OnInit {
     color: String;
     color_default: string;
     loading: boolean;
+    errorSave: boolean;
     count: number;
     submitted = false;
     errorManual = false;
@@ -26,17 +27,29 @@ export class CategoriesFormComponent implements OnInit {
         this.loading = false;
         this.state = ' (Nuevo) ';
         this.color = this.color_default;
+        this.errorSave = false; // Oculta mensaje de o guardar
     }
     // convenience getter for easy access to form fields
     get f() {
         return this.registerForm.controls;
     }
+    checkSave() {
+        if (this.state !== ' (Editar) ' && this.state !== ' (Nuevo) ') {
+            // No se puede guardar
+            return true;
+        }
+        // Se puede guardar
+        return false;
+    }
     // Send to save
     onSubmit() {
         this.submitted = true;
         this.errorManual = false;
-
-        console.log(this.registerForm.controls.categoryName);
+        this.errorSave = false;
+        if (this.checkSave) {
+            // No se puede guardar
+            this.errorSave = true;
+        }
         if (this.registerForm.controls.categoryName.value === '') {
             this.errorManual = true;
             this.reset();
@@ -66,6 +79,7 @@ export class CategoriesFormComponent implements OnInit {
             _id: [item._id],
             categoryName: [item.name]
         });
+        this.errorSave = false; // Oculta mensaje de o guardar
     }
     search() {
         this.state = ' (Buscar) ';
@@ -76,7 +90,8 @@ export class CategoriesFormComponent implements OnInit {
             name: this.registerForm.value.categoryName
         };
         // tslint:disable-next-line:quotemark
-        this.categoriesService.putCategories(this.categories);
+        this.categoriesService.getlikeCategories(this.categories.name);
+        this.errorSave = false; // Oculta mensaje de o guardar
     }
     reset() {
         this.registerForm = this.formBuilder.group({
@@ -86,5 +101,6 @@ export class CategoriesFormComponent implements OnInit {
         this.search();
         this.state = ' (Nuevo) ';
         this.color = this.color_default;
+        this.errorSave = false; // Oculta mensaje de o guardar
     }
 }
