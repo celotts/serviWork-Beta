@@ -14,14 +14,14 @@ export class PaginationsService {
     acumPag: any;
     constructor() {
       // Init value
-      this.limit = 20;
+      this.limit = 3;
       this.skip = 0;
       this.totalPag = 0;
       this.acumPag = this.limit;
     }
     nextPage() {
       if ( this.acumPag < this.tRegi ) {
-        return this.skip += this.limit;
+        return [(this.skip += this.limit), this.limit];
       }
     }
     previusPage() {

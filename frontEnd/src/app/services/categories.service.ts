@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 // import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClient} from '@angular/common/http';
 import { Categories } from '../models/categories';
+import { Pagination } from '../models/pagination';
 
 /*const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,6 +13,7 @@ import { Categories } from '../models/categories';
 export class CategoriesService {
     itemSelect = <any>[];
     count: number;
+    pagination: Pagination[];
     selectedCategories = <any> Categories;
     categories: Categories[];
     readonly URL_API = 'http://localhost:3000/api/category';
@@ -51,17 +53,17 @@ export class CategoriesService {
           });
     }
     // Get all category
-    getlikeCategories(categories: string) {
-        if (categories === '') {
-            this.getQuery(this.URL_API);
-        } else {
-            this.getQuery(this.URL_API_LIKE + `/${categories}`);
-        }
-    }
-    getQuery(exec) {
-        this.http.get(exec)
+    getlikeCategories(categories: string, pagination: Pagination) {
+      if (categories === '') {
+            this.http.get(this.URL_API + `/, ${pagination}`)
             .subscribe(res => {
               this.categories = res as Categories[];
-        });
+          });
+        } else {
+          this.http.get(this.URL_API_LIKE + `/${categories},${pagination}`)
+          .subscribe(res => {
+              this.categories = res as Categories[];
+          });
+        }
     }
 }

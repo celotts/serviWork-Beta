@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import { Categories } from '../../models/categories';
 import { CategoriesService } from '../../services/categories.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Pagination } from '../../models/pagination';
 @Component({
     selector: 'app-categories-form',
     templateUrl: './categories-form/categories-form.html'
@@ -17,6 +18,9 @@ export class CategoriesFormComponent implements OnInit {
     submitted = false;
     errorManual = false;
     categories = <any>[];
+    pagination: Pagination;
+    limit = 20; // Default
+    skip: 20; // Default
     constructor(private categoriesService: CategoriesService, private formBuilder: FormBuilder) { }
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
@@ -84,13 +88,13 @@ export class CategoriesFormComponent implements OnInit {
     search() {
         this.state = ' (Buscar) ';
         this.color = '#229954';
-        this.categoriesService.getlikeCategories(this.registerForm.controls.categoryName.value);
+        this.categoriesService.getlikeCategories(this.registerForm.controls.categoryName.value, this.pagination );
         this.categories = {
             _id: this.registerForm.value._id,
             name: this.registerForm.value.categoryName
         };
         // tslint:disable-next-line:quotemark
-        this.categoriesService.getlikeCategories(this.categories.name);
+        this.categoriesService.getlikeCategories(this.categories.name, this.pagination);
         this.errorSave = false; // Oculta mensaje de o guardar
     }
     reset() {
@@ -102,5 +106,15 @@ export class CategoriesFormComponent implements OnInit {
         this.state = ' (Nuevo) ';
         this.color = this.color_default;
         this.errorSave = false; // Oculta mensaje de o guardar
+    }
+    pageNexts(value) {
+        this.limit = value[1];
+        this.skip = value[0];
+        this.pagination = {
+            'limit': 3,
+            'skip' : 3,
+            'tRegi': 0
+        };
+        console.log ( ' Lott ' + value);
     }
 }

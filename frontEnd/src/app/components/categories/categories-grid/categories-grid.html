@@ -1,4 +1,4 @@
-<app-categories-form></app-categories-form>
+<app-categories-form (pageNext)='pageNexts($event)'></app-categories-form>
 <div class="row" *ngFor = "let item of categoriesService.categories"> 
     <div  class="col-md-10">
         {{item.name}}
@@ -17,3 +17,7 @@
     </div>
     <div class="col-md-10"><hr></div>
 </div>
+<!-- Formulario -->
+<app-paginations 
+    [cantReg]="categoriesService.categories"
+    (pageNext)="goNextPage($event)"></app-paginations>

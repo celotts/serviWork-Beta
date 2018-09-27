@@ -3,9 +3,16 @@ const Category = require('../models/category');
 const categoryCtrl = {};
 
 categoryCtrl.getCategorys = async (req, res, next) => {
-    //(null,null,{skip:2,limit: 2})
-    const CategoryData = await Category.find().sort({ "name": 1 })
-     res.json(CategoryData);
+    //const CategoryData = await 
+    Category
+    .find()
+    .sort({ "name": 1 })
+    .skip(req.body.skip - req.body.limit)
+    .limit(req.body.limit)
+    .exec((err, category) =>{
+        res.json(category);
+    })
+    //res.json(CategoryData);
 }
 
 categoryCtrl.crateCategory = async (req, res, next) => {
@@ -42,9 +49,11 @@ categoryCtrl.delCategory = async (req, res, next) => {
 }
 
 categoryCtrl.getlikeCategorys =  (req, res, next) => {
+    const vskip = 1;
+    const vlimit = 3;
     var regex = new RegExp(req.params.name, "i")
-    ,   query = { name: regex };
-
+    ,   query = { name: regex};
+    
     const category = Category.find(query, function(err, CategoryData) {
         if (err) {
             res.json(err);

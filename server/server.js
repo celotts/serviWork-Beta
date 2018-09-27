@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -12,6 +13,7 @@ const hostname = 'localhost';
 const porDb = '4200';
 
 //Middlewares
+app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors({origin: `http://${hostname}:${porDb}`}));
