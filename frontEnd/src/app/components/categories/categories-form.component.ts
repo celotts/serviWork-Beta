@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Pagination } from '../../models/pagination';
 @Component({
     selector: 'app-categories-form',
-    templateUrl: './categories-form/categories-form.html'
+    templateUrl: './categories-form/categories-form.html',
 })
 export class CategoriesFormComponent implements OnInit {
     registerForm: FormGroup;
@@ -19,8 +19,8 @@ export class CategoriesFormComponent implements OnInit {
     errorManual = false;
     categories = <any>[];
     pagination: Pagination;
-    limit = 20; // Default
-    skip: 20; // Default
+    limit = 10; // Default
+    skip: 1; // Default
     constructor(private categoriesService: CategoriesService, private formBuilder: FormBuilder) { }
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
@@ -31,7 +31,7 @@ export class CategoriesFormComponent implements OnInit {
         this.loading = false;
         this.state = ' (Nuevo) ';
         this.color = this.color_default;
-        this.errorSave = false; // Oculta mensaje de o guardar
+        this.errorSave = false; // Hide or save message
     }
     // convenience getter for easy access to form fields
     get f() {
@@ -39,10 +39,10 @@ export class CategoriesFormComponent implements OnInit {
     }
     checkSave() {
         if (this.state !== ' (Editar) ' && this.state !== ' (Nuevo) ') {
-            // No se puede guardar
+            // Can not save
             return true;
         }
-        // Se puede guardar
+        // It can be saved
         return false;
     }
     // Send to save
@@ -51,7 +51,7 @@ export class CategoriesFormComponent implements OnInit {
         this.errorManual = false;
         this.errorSave = false;
         if (this.checkSave) {
-            // No se puede guardar
+            // Can not save
             this.errorSave = true;
         }
         if (this.registerForm.controls.categoryName.value === '') {
@@ -83,19 +83,19 @@ export class CategoriesFormComponent implements OnInit {
             _id: [item._id],
             categoryName: [item.name]
         });
-        this.errorSave = false; // Oculta mensaje de o guardar
+        this.errorSave = false; // Hide or save message
     }
     search() {
         this.state = ' (Buscar) ';
         this.color = '#229954';
-        this.categoriesService.getlikeCategories(this.registerForm.controls.categoryName.value, this.pagination );
+        this.categoriesService.getCategories(this.registerForm.controls.categoryName.value.trim());
         this.categories = {
             _id: this.registerForm.value._id,
-            name: this.registerForm.value.categoryName
+            name: this.registerForm.value.categoryName.trim()
         };
         // tslint:disable-next-line:quotemark
-        this.categoriesService.getlikeCategories(this.categories.name, this.pagination);
-        this.errorSave = false; // Oculta mensaje de o guardar
+        // this.categoriesService.getlikeCategories(this.categories.name);
+        this.errorSave = false; // Hide or save message
     }
     reset() {
         this.registerForm = this.formBuilder.group({
@@ -105,16 +105,10 @@ export class CategoriesFormComponent implements OnInit {
         this.search();
         this.state = ' (Nuevo) ';
         this.color = this.color_default;
-        this.errorSave = false; // Oculta mensaje de o guardar
+        this.errorSave = false; // Hide or save message
     }
     pageNexts(value) {
         this.limit = value[1];
         this.skip = value[0];
-        this.pagination = {
-            'limit': 3,
-            'skip' : 3,
-            'tRegi': 0
-        };
-        console.log ( ' Lott ' + value);
     }
 }

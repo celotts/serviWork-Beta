@@ -13,6 +13,7 @@ import { CategoriesFormComponent } from './components/categories/categories-form
 import { PaginationsComponent } from './components/paginations/paginations.component';
 import { PaginationsService } from './services/paginations.service';
 
+
 registerLocaleData(en);
 
 @NgModule({

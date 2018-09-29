@@ -1,30 +1,43 @@
 import { Injectable } from '@angular/core';
-// import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient , HttpHeaders, HttpParams } from '@angular/common/http';
 import { Categories } from '../models/categories';
 import { Pagination } from '../models/pagination';
 
-/*const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};*/
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
     itemSelect = <any>[];
     count: number;
-    pagination: Pagination[];
     selectedCategories = <any> Categories;
     categories: Categories[];
+    pagination: Pagination;
+    headers: any;
     readonly URL_API = 'http://localhost:3000/api/category';
-    readonly URL_API_LIKE = 'http://localhost:3000/api/category/like';
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+      this.headers = this.headerHttp();
+    }
+    headerHttp() {
+      return  new HttpHeaders()
+        .set('Authorization', 'my-auth-token')
+        .set('Content-Type', 'application/json');
+    }
     // Get all category
-    getCategories() {
-        return this.http.get(this.URL_API)
+    getCategories(categories: string) {
+        if (this.pagination === undefined) {
+          this.pagination = {
+            skip: 1,
+            limit: 10,
+            tRegi: 0
+          };
+        }
+        const skip = this.pagination.skip;
+        const limit = this.pagination.limit;
+        this.headers = this.headerHttp();
+        return this.http.get(this.URL_API + `/${categories} /${skip} /${limit}`)
           .subscribe(res => {
             this.categories = res as Categories[];
-            console.log('View all Reg');
+            console.log('Execute the conulta');
           });
     }
     // create new category
@@ -33,7 +46,7 @@ export class CategoriesService {
         this.http.post(this.URL_API + `/`, categories)
           .subscribe(res => {
             console.log('Create Register');
-            this.getCategories();
+            this.getCategories('');
           });
     }
     // update category
@@ -41,7 +54,7 @@ export class CategoriesService {
         this.http.put(this.URL_API + `/${categories._id}`, categories)
           .subscribe(res => {
             console.log('Update Register');
-            this.getCategories();
+            this.getCategories('');
           });
     }
     // delete category
@@ -49,21 +62,7 @@ export class CategoriesService {
         this.http.delete(this.URL_API + `/${_id}`)
           .subscribe(res => {
             console.log('Delete Register');
-            this.getCategories();
+            this.getCategories('');
           });
-    }
-    // Get all category
-    getlikeCategories(categories: string, pagination: Pagination) {
-      if (categories === '') {
-            this.http.get(this.URL_API + `/, ${pagination}`)
-            .subscribe(res => {
-              this.categories = res as Categories[];
-          });
-        } else {
-          this.http.get(this.URL_API_LIKE + `/${categories},${pagination}`)
-          .subscribe(res => {
-              this.categories = res as Categories[];
-          });
-        }
     }
 }

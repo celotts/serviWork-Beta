@@ -3,18 +3,46 @@ const Category = require('../models/category');
 const categoryCtrl = {};
 
 categoryCtrl.getCategorys = async (req, res, next) => {
-    //const CategoryData = await 
-    Category
-    .find()
-    .sort({ "name": 1 })
-    .skip(req.body.skip - req.body.limit)
-    .limit(req.body.limit)
-    .exec((err, category) =>{
-        res.json(category);
-    })
-    //res.json(CategoryData);
-}
+    skip = req.params.skip * 1;
+    limit = req.params.limit * 1
+    // Convert string to numbber
+    if (skip != isNaN()) { // If it is number, it turns it
+        skip = 1;
+    }
+    if (limit != isNaN()) { // If it is number, it turns it
+        limit = 10;
+    }
+    // Calculate record per page
+    pag = ((skip * limit) - limit);
+    //Name Aux
+    nameAux = req.params.name;
+    // Validate that the chain is not empty
+    if(nameAux.trim().length > 0) {
+        var regex = new RegExp(nameAux.trim(), "i") // Examine the business and look for the coincidence
+        , query = { name: regex};
+        // Generate the query
+        Category
+            .find(query) // Make the query
+            .sort({ "name": 1 })  // Sorts Ascending - (-1 Descending)
+            .skip(pag) // It is to show the amount of registration per page
+            .limit(limit)  // Registration limit per page
+            .exec((err, category) =>{
+                res.json(category); // Returns the query data
+            })
 
+    } else {
+        // When the chain is empty
+        Category.find() // Make the query
+        .sort({ "name": 1 })  // Sorts Ascending - (-1 Descending)
+        .skip(pag) // It is to show the amount of registration per page
+        .limit(limit)  // Registration limit per page
+        .exec((err, category) =>{
+            res.json(category); // Returns the query data
+        })
+    
+    }
+}
+// Save New Category
 categoryCtrl.crateCategory = async (req, res, next) => {
     const category = new Category({
         name : req.body.name 
@@ -24,12 +52,12 @@ categoryCtrl.crateCategory = async (req, res, next) => {
         'status' : 'Category saved'
     });
 }
-
+// Get category for Id
 categoryCtrl.getCategoryId = async (req, res, next) => {
     const CategoryData = await Category.findById(req.params.id);
     res.json(CategoryData);
 }
-
+// Edit Category
 categoryCtrl.editCategory = async (req, res, next) => {
     const { id } = req.params;
     const category = {
@@ -40,28 +68,12 @@ categoryCtrl.editCategory = async (req, res, next) => {
         status : 'Category update'+req.params
     });
 }
-
+// Del Category
 categoryCtrl.delCategory = async (req, res, next) => {
     await Category.findByIdAndRemove(req.params.id);
     res.json({
         status : "Category deleted"
     });
-}
-
-categoryCtrl.getlikeCategorys =  (req, res, next) => {
-    const vskip = 1;
-    const vlimit = 3;
-    var regex = new RegExp(req.params.name, "i")
-    ,   query = { name: regex};
-    
-    const category = Category.find(query, function(err, CategoryData) {
-        if (err) {
-            res.json(err);
-        }
-
-        res.json(CategoryData);
-    });
-    //res.json(category);
 }
 
 module.exports = categoryCtrl;

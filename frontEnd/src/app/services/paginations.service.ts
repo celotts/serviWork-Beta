@@ -9,13 +9,10 @@ export class PaginationsService {
     limit: any;
     skip: any;
     tRegi: any;
-    pagination: Pagination[];
     totalPag: any;
     acumPag: any;
     constructor() {
       // Init value
-      this.limit = 3;
-      this.skip = 0;
       this.totalPag = 0;
       this.acumPag = this.limit;
     }
@@ -34,6 +31,13 @@ export class PaginationsService {
       }
     }
     initValue(pagination: Pagination) {
+      if (pagination === undefined) {
+        pagination = {
+          skip: 20,
+          limit: 20,
+          tRegi: 0
+        };
+      }
       this.limit = pagination.limit;
       this.skip = pagination.skip ;
       this.tRegi = pagination.tRegi;

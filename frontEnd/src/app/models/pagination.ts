@@ -1,7 +1,7 @@
 export class Pagination {
-    constructor( skip= 3, limit= 3, tRegi = 0 ) {
-        skip = 3;
-        limit = 3;
+    constructor( skip= 1, limit= 10, tRegi = 0 ) {
+        skip = 1;
+        limit = 10;
         this.tRegi = 0;
     }
     skip: number;

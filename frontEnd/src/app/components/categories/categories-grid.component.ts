@@ -3,11 +3,12 @@ import { Categories } from '../../models/categories';
 import { CategoriesService } from '../../services/categories.service';
 import { NgForm } from '@angular/forms';
 import { CategoriesFormComponent } from '../categories/categories-form.component';
+import { Pagination } from '../../models/pagination';
 
 @Component({
     selector: 'app-categories-grid',
     templateUrl: './categories-grid/categories-grid.html',
-    styleUrls: ['./categories.component.css']
+    styleUrls: ['./categories.component.css'],
 })
 export class CategoriesGridComponent implements OnInit {
     // Define decorator for two component communication
@@ -54,7 +55,7 @@ export class CategoriesGridComponent implements OnInit {
     }
     getCategories() {
         // Search all categories
-        this.categoriesService.getCategories();
+        this.categoriesService.getCategories(this.categories.name);
     }
     resetForm(form?: NgForm) {
         // Reset Form

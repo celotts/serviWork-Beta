@@ -14,11 +14,13 @@ export class PaginationsComponent implements OnInit {
     constructor(public paginationService: PaginationsService) {}
 
     ngOnInit() {
-        this.pagination = {
-            limit: 20,
-            skip: 0,
-            tRegi : 100
-        };
+        if (this.pagination === undefined) {
+            this.pagination = {
+              skip: 20,
+              limit: 20,
+              tRegi: 0
+            };
+          }
         this.paginationService.initValue(this.pagination);
     }
     nextPage() {
