@@ -23,6 +23,8 @@ export class CategoriesFormComponent implements OnInit {
     skip: 1; // Default
     constructor(private categoriesService: CategoriesService, private formBuilder: FormBuilder) { }
     ngOnInit() {
+        const var1 = this.categoriesService.getTotalReg();
+        console.log( ' form ' +  var1);
         this.registerForm = this.formBuilder.group({
             _id: [''],
             categoryName: ['', Validators.required]
@@ -107,8 +109,5 @@ export class CategoriesFormComponent implements OnInit {
         this.color = this.color_default;
         this.errorSave = false; // Hide or save message
     }
-    pageNexts(value) {
-        this.limit = value[1];
-        this.skip = value[0];
-    }
+    pageNexts(value) {}
 }

@@ -1,23 +1,30 @@
 <app-categories-form (pageNext)='pageNexts($event)'></app-categories-form>
-<div class="row" *ngFor = "let item of categoriesService.categories"> 
-    <div  class="col-md-10">
-        {{item.name}}
+<div *ngIf="categoriesService.getTotalReg() >0">
+    <div class="row" *ngFor = "let item of categoriesService.categories"> 
+        <div  class="col-md-10">
+            {{item.name}} 
+        </div>
+        <div  class="col-md-2">
+            <a class="btn btn-light margin-into-icons btn-sm" (click)="selecciona(item)">
+                <i class="material-icons icon-edit">
+                    edit
+                </i>
+            </a>  
+            <a class="btn btn-light btn-sm" (click)="delete(item)">
+                <i class="material-icons icon-delete">
+                    delete
+                </i>
+            </a>
+        </div>
+        <div class="col-md-10"><hr></div>
     </div>
-    <div  class="col-md-2">
-        <a class="btn btn-light margin-into-icons btn-sm" (click)="selecciona(item)">
-            <i class="material-icons icon-edit">
-                edit
-            </i>
-        </a>  
-        <a class="btn btn-light btn-sm" (click)="delete(item)">
-            <i class="material-icons icon-delete">
-                delete
-            </i>
-        </a>
-    </div>
-    <div class="col-md-10"><hr></div>
+</div>
+<div *ngIf="categoriesService.getTotalReg() == 0">
+    No hay resgitro a mostrar ...
 </div>
 <!-- Formulario -->
 <app-paginations 
     [cantReg]="categoriesService.categories"
+    [limit] = "pagination.limit"
+    [tReg] = "categoriesService.getTotalReg()"
     (pageNext)="goNextPage($event)"></app-paginations>

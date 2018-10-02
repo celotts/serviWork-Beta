@@ -1,21 +1,12 @@
 const Category = require('../models/category');
 
 const categoryCtrl = {};
-
 categoryCtrl.getCategorys = async (req, res, next) => {
-    skip = req.params.skip * 1;
-    limit = req.params.limit * 1
-    // Convert string to numbber
-    if (skip != isNaN()) { // If it is number, it turns it
-        skip = 1;
-    }
-    if (limit != isNaN()) { // If it is number, it turns it
-        limit = 10;
-    }
+    skip = req.params.skip * 1 || 1;
+    limit = req.params.limit * 1 || 10;
     // Calculate record per page
     pag = ((skip * limit) - limit);
-    //Name Aux
-    nameAux = req.params.name;
+    nameAux = req.params.name; //Name Aux
     // Validate that the chain is not empty
     if(nameAux.trim().length > 0) {
         var regex = new RegExp(nameAux.trim(), "i") // Examine the business and look for the coincidence
@@ -27,9 +18,9 @@ categoryCtrl.getCategorys = async (req, res, next) => {
             .skip(pag) // It is to show the amount of registration per page
             .limit(limit)  // Registration limit per page
             .exec((err, category) =>{
+                if (err) return next(err);
                 res.json(category); // Returns the query data
-            })
-
+            });
     } else {
         // When the chain is empty
         Category.find() // Make the query
@@ -37,9 +28,11 @@ categoryCtrl.getCategorys = async (req, res, next) => {
         .skip(pag) // It is to show the amount of registration per page
         .limit(limit)  // Registration limit per page
         .exec((err, category) =>{
-            res.json(category); // Returns the query data
+            Category.count((err, count) => {
+                if (err) return next(err);
+                res.json(category); // Returns the query data
+            });
         })
-    
     }
 }
 // Save New Category

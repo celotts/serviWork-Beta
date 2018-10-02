@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output } from '@angular/core';
 import { Categories } from '../../models/categories';
 import { CategoriesService } from '../../services/categories.service';
 import { NgForm } from '@angular/forms';
@@ -12,21 +12,35 @@ import { Pagination } from '../../models/pagination';
 })
 export class CategoriesGridComponent implements OnInit {
     // Define decorator for two component communication
+    @Output() tReg;
     @ViewChild(CategoriesFormComponent) formCateg: CategoriesFormComponent;
     // Declares the var count the amount of record in the table
     count = 0;
-    constructor(public categoriesService: CategoriesService) {
-        // Assign new model class the categories
-        this.categoriesService.selectedCategories = new Categories();
-    }
+    // Number pag
+    nPag: any;
     // Define struct data
     categories: Categories = {
         _id : null,
-        name : ''
+        name : '',
+        length: 0
     };
+    pagination: Pagination;
+
+    constructor(public categoriesService: CategoriesService) {
+        // Assign new model class the categories
+        this.categoriesService.selectedCategories = new Categories();
+        // Search all categories
+        this.pagination = {
+            skip: 1,
+            limit: 10,
+            tRegi: 0
+        };
+
+    }
     ngOnInit() {
         // Call the function to the obtain all category records
         this.getCategories();
+        console.log( ' grid ' );
     }
     /**
     * ----------------------------------------------
@@ -54,7 +68,6 @@ export class CategoriesGridComponent implements OnInit {
         }
     }
     getCategories() {
-        // Search all categories
         this.categoriesService.getCategories(this.categories.name);
     }
     resetForm(form?: NgForm) {

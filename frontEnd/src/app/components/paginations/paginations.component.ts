@@ -1,6 +1,9 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, AfterContentInit } from '@angular/core';
 import { PaginationsService } from '../../services/paginations.service';
 import { Pagination } from '../../models/pagination';
+import { CategoriesService } from '../../services/categories.service';
+
+
 
 @Component({
   selector: 'app-paginations',
@@ -9,25 +12,18 @@ import { Pagination } from '../../models/pagination';
 })
 export class PaginationsComponent implements OnInit {
     @Input() cantReg;
+    @Input() limit;
+    @Input() tReg;
     @Output() pageNext: EventEmitter<any> = new EventEmitter();
-    pagination: Pagination;
     constructor(public paginationService: PaginationsService) {}
-
-    ngOnInit() {
-        if (this.pagination === undefined) {
-            this.pagination = {
-              skip: 20,
-              limit: 20,
-              tRegi: 0
-            };
-          }
-        this.paginationService.initValue(this.pagination);
-    }
+    ngOnInit() {}
     nextPage() {
-        this.pageNext.emit(this.paginationService.nextPage());
+        // const datas = range(1 , 20);
+        // console.log(datas);
+        // this.pageNext.emit(this.paginationService.nextPage());
         // console.log(this.paginationService.nextPage());
     }
     previous() {
-        console.log(this.paginationService.previusPage());
+        // console.log(this.paginationService.previusPage());
     }
 }

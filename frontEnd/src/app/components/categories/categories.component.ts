@@ -15,7 +15,8 @@ export class CategoriesComponent implements OnInit {
     // Define structure
     categories: Categories = {
         _id : null,
-        name : ''
+        name : '',
+        length: 0
     };
     constructor (public categoriesService: CategoriesService) {}
     ngOnInit() {}
