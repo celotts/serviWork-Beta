@@ -15,15 +15,16 @@ export class PaginationsComponent implements OnInit {
     @Input() limit;
     @Input() tReg;
     @Output() pageNext: EventEmitter<any> = new EventEmitter();
-    constructor(public paginationService: PaginationsService) {}
+    nPag: any;
+    constructor(public paginationService: PaginationsService, public categoriesService: CategoriesService) {}
     ngOnInit() {}
     nextPage() {
         // const datas = range(1 , 20);
         // console.log(datas);
         // this.pageNext.emit(this.paginationService.nextPage());
-        // console.log(this.paginationService.nextPage());
+        console.log(this.paginationService.nextPage());
     }
     previous() {
-        // console.log(this.paginationService.previusPage());
+        console.log(this.paginationService.previusPage());
     }
 }

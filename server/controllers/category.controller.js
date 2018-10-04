@@ -28,12 +28,19 @@ categoryCtrl.getCategorys = async (req, res, next) => {
         .skip(pag) // It is to show the amount of registration per page
         .limit(limit)  // Registration limit per page
         .exec((err, category) =>{
-            Category.count((err, count) => {
-                if (err) return next(err);
+            if (err) return next(err);
                 res.json(category); // Returns the query data
-            });
         })
+        
     }
+}
+categoryCtrl.getTregCategorys = async (req, res, next) => {
+    Category.find()
+        .count()
+        .exec((err, category) =>{
+            if (err) return next(err);
+            res.json(category);
+        })
 }
 // Save New Category
 categoryCtrl.crateCategory = async (req, res, next) => {
@@ -44,6 +51,11 @@ categoryCtrl.crateCategory = async (req, res, next) => {
     res.json({
         'status' : 'Category saved'
     });
+}
+// Get category for Id
+categoryCtrl.getTregCategory = async (req, res, next) => {
+    const CategoryData = await Category.find();
+    res.json(CategoryData);
 }
 // Get category for Id
 categoryCtrl.getCategoryId = async (req, res, next) => {

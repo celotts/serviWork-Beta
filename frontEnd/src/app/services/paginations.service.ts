@@ -6,29 +6,23 @@ import { $ } from 'protractor';
   providedIn: 'root'
 })
 export class PaginationsService {
-    limit: any;
-    skip: any;
-    tRegi: any;
-    totalPag: any;
-    acumPag: any;
+    pag: number;
+    totalReg: any;
+    pagLimit: any;
     constructor() {
       // Init value
-      this.totalPag = 0;
-      this.acumPag = this.limit;
+      this.pag = 1;
     }
     nextPage() {
-      /*if ( this.acumPag < this.tRegi ) {
-        return [(this.skip += this.limit), this.limit];
-      }*/
+      return this.pag += 1;
     }
     previusPage() {
-      /*if (this.skip === this.limit) {
-        return this.skip = 0;
-      } else if (this.skip > 0) {
-        return this.skip -= this.limit;
+      if (this.pag > 1) {
+        this.pag -= 1;
       } else {
-        return this.skip = 0;
-      }*/
+        this.pag = 1;
+      }
+      return this.pag;
     }
     initValue(pagination: Pagination) {
      /* if (pagination === undefined) {
@@ -42,4 +36,43 @@ export class PaginationsService {
       this.skip = pagination.skip ;
       this.tRegi = pagination.tRegi;*/
     }
+    setTotalReg(totalReg) {
+      this.totalReg = totalReg;
+    }
+    getTotalReg() {
+      return this.totalReg;
+    }
+    setpagLimit(pagLimit) {
+      this.pagLimit = pagLimit;
+    }
+    getpagLimit() {
+      return this.pagLimit;
+    }
+    generetePagination() {
+      if (this.getpagLimit() === undefined) {
+        return;
+      }
+      if (this.getTotalReg() === undefined) {
+        return;
+      }
+      const tReg = this.getTotalReg();
+      let tPag = 1;
+      if (tReg > 0 && this.getpagLimit() > 0) {
+          tPag = (tReg / this.getpagLimit());
+          if (tPag <= 0) {
+              let tPag = this.getpagLimit;
+              // tslint:disable-next-line:no-shadowed-variable
+          }
+      }
+      const nPags = [];
+      console.log(tReg);
+      console.log(tPag);
+      for (let i = 0; i < tPag; ++i) {
+          nPags[i] = i + 1;
+      }
+      console.log('getPagLimit ' + this.getpagLimit());
+      console.log('getTotalReg ' + this.getTotalReg());
+      console.log(nPags);
+      return nPags;
+  }
 }

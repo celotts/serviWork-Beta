@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders, HttpParams } from '@angular/common/http';
 import { Categories } from '../models/categories';
 import { Pagination } from '../models/pagination';
+import { PaginationsService } from './paginations.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +11,18 @@ export class CategoriesService {
     itemSelect = <any>[];
     count: number;
     totalReg: number;
+    nPag: any; // Number page
     selectedCategories = <any> Categories;
     categories: Categories[];
     pagination: Pagination = { // initialize model
       skip: 1,
-      limit: 10,
+      limit: 3,
       tRegi: 0
     };
     headers: any;
+    readonly URL_API_TREG = 'http://localhost:3000/api/category/tReg';
     readonly URL_API = 'http://localhost:3000/api/category';
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, public paginationService: PaginationsService) {
       this.headers = this.headerHttp();
       this.totalReg = 0;
     }
@@ -37,12 +40,19 @@ export class CategoriesService {
           .subscribe(res => {
             this.categories = res as Categories[];
             this.pagination.tRegi = this.categories.length;
-            this.totalReg = this.categories.length;
             this.setTotalReg(this.categories.length);
-            console.log(this.categories);
             return categories;
             });
     }
+    getTregCategories(categories: string) {
+      return this.http.get(this.URL_API_TREG + `/${categories}`)
+        .subscribe(res => {
+          this.setTotalReg(res);
+          this.paginationService.setTotalReg(this.getTotalReg());
+          this.paginationService.setpagLimit(this.pagination.limit);
+          return this.getCategories(categories);
+          });
+  }
     // create new category
     postCategories(categories: Categories) {
         console.log('Starts record saving process Categories');
@@ -74,20 +84,4 @@ export class CategoriesService {
     getTotalReg(): number {
       return this.pagination.tRegi;
     }
-    generetePagination() {
-      const tReg = this.getTotalReg();
-      let tPag = 1;
-      if (tReg > 0 && this.pagination.limit > 0) {
-          tPag = (tReg / this.pagination.limit);
-          if (tPag <= 0) {
-              tPag = 10;
-              // tslint:disable-next-line:no-shadowed-variable
-          }
-      }
-      const nPag = [];
-      for (let i = 0; i < tPag; ++i) {
-          nPag[i] = i + 1;
-      }
-      return nPag;
-  }
 }

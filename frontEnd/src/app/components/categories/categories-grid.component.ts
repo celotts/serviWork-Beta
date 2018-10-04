@@ -35,7 +35,6 @@ export class CategoriesGridComponent implements OnInit {
             limit: 10,
             tRegi: 0
         };
-
     }
     ngOnInit() {
         // Call the function to the obtain all category records
@@ -68,7 +67,7 @@ export class CategoriesGridComponent implements OnInit {
         }
     }
     getCategories() {
-        this.categoriesService.getCategories(this.categories.name);
+        this.categoriesService.getTregCategories(this.categories.name);
     }
     resetForm(form?: NgForm) {
         // Reset Form
