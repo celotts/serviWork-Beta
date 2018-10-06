@@ -26,5 +26,8 @@
 <app-paginations 
     [cantReg]="categoriesService.categories"
     [limit] = "pagination.limit"
-    [tReg] = "categoriesService.getTotalReg()"
-    (pageNext)="goNextPage($event)"></app-paginations>
+    [tReg] = "paginationService.getTotalReg()"
+    (pageNext)="goNextPage($event)"
+    (pagePrevius) = "goPreviusPage($event)"
+    (page)="goPages($event)">
+</app-paginations>

@@ -4,6 +4,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { NgForm } from '@angular/forms';
 import { CategoriesFormComponent } from '../categories/categories-form.component';
 import { Pagination } from '../../models/pagination';
+import { PaginationsService } from '../../services/paginations.service';
 
 @Component({
     selector: 'app-categories-grid',
@@ -12,7 +13,6 @@ import { Pagination } from '../../models/pagination';
 })
 export class CategoriesGridComponent implements OnInit {
     // Define decorator for two component communication
-    @Output() tReg;
     @ViewChild(CategoriesFormComponent) formCateg: CategoriesFormComponent;
     // Declares the var count the amount of record in the table
     count = 0;
@@ -26,7 +26,7 @@ export class CategoriesGridComponent implements OnInit {
     };
     pagination: Pagination;
 
-    constructor(public categoriesService: CategoriesService) {
+    constructor(public categoriesService: CategoriesService, public paginationService: PaginationsService) {
         // Assign new model class the categories
         this.categoriesService.selectedCategories = new Categories();
         // Search all categories
@@ -39,7 +39,6 @@ export class CategoriesGridComponent implements OnInit {
     ngOnInit() {
         // Call the function to the obtain all category records
         this.getCategories();
-        console.log( ' grid ' );
     }
     /**
     * ----------------------------------------------
@@ -67,7 +66,7 @@ export class CategoriesGridComponent implements OnInit {
         }
     }
     getCategories() {
-        this.categoriesService.getTregCategories(this.categories.name);
+        this.categoriesService.getTregCategories(this.categoriesService.getNameCategory());
     }
     resetForm(form?: NgForm) {
         // Reset Form
@@ -79,6 +78,9 @@ export class CategoriesGridComponent implements OnInit {
         this.categories = categories;
     }
     goNextPage(nreg) {
-        this.formCateg.pageNexts(nreg);
+     //   this.formCateg.pageNexts(nreg);
+    }
+    goPages() {
+        this.getCategories();
     }
 }

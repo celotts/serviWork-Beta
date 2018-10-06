@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Categories } from '../../models/categories';
 import { CategoriesService } from '../../services/categories.service';
 import { NgForm } from '@angular/forms';
+import { PaginationsService } from '../../services/paginations.service';
 
 
 @Component({
@@ -18,6 +19,6 @@ export class CategoriesComponent implements OnInit {
         name : '',
         length: 0
     };
-    constructor (public categoriesService: CategoriesService) {}
+    constructor (public categoriesService: CategoriesService, public paginationService: PaginationsService) {}
     ngOnInit() {}
 }

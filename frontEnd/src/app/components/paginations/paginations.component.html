@@ -3,15 +3,15 @@
         <li class="page-item">
             <a class="page-link"  tabindex="-1" (click)="previous()">Anterior</a>
         </li>
-        <li class="page-item" *ngFor="let item of paginationService.generetePagination()">
-            <a class="page-link" (click)="previous()">{{item}}</a>
+        <li class="page-item" [ngClass]="{active: activePage === item}" *ngFor="let item of paginationService.getNumberPag()">
+            <a class="page-link"  (click)="pages(item)">{{item}}</a>
         </li>
         
         <li class="page-item">
             <a class="page-link" (click)="nextPage()">Siguiente</a>
         </li>
         <li class="page-item text-right count" style="margin: 10px">
-            Reg. ({{tReg}})
+            Registros ({{tReg}})
         </li>
     </ul>
 </div>

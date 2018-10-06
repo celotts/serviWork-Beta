@@ -35,12 +35,26 @@ categoryCtrl.getCategorys = async (req, res, next) => {
     }
 }
 categoryCtrl.getTregCategorys = async (req, res, next) => {
-    Category.find()
+    nameAux = req.params.category; //Name Aux
+    if (nameAux == 'tReg') {
+        Category.find()
         .count()
         .exec((err, category) =>{
             if (err) return next(err);
             res.json(category);
         })
+    } else if (nameAux != null) {
+        var regex = new RegExp(nameAux.trim(), "i") // Examine the business and look for the coincidence
+        , query = { name: regex};
+        Category.find(query)
+        .count()
+        .exec((err, category) =>{
+            if (err) return next(err);
+            res.json(category);
+        })
+    }
+    
+    
 }
 // Save New Category
 categoryCtrl.crateCategory = async (req, res, next) => {
@@ -51,11 +65,6 @@ categoryCtrl.crateCategory = async (req, res, next) => {
     res.json({
         'status' : 'Category saved'
     });
-}
-// Get category for Id
-categoryCtrl.getTregCategory = async (req, res, next) => {
-    const CategoryData = await Category.find();
-    res.json(CategoryData);
 }
 // Get category for Id
 categoryCtrl.getCategoryId = async (req, res, next) => {

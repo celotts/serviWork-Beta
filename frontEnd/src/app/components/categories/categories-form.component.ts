@@ -24,7 +24,6 @@ export class CategoriesFormComponent implements OnInit {
     constructor(private categoriesService: CategoriesService, private formBuilder: FormBuilder) { }
     ngOnInit() {
         const var1 = this.categoriesService.getTotalReg();
-        console.log( ' form ' +  var1);
         this.registerForm = this.formBuilder.group({
             _id: [''],
             categoryName: ['', Validators.required]
@@ -90,7 +89,8 @@ export class CategoriesFormComponent implements OnInit {
     search() {
         this.state = ' (Buscar) ';
         this.color = '#229954';
-        this.categoriesService.getCategories(this.registerForm.controls.categoryName.value.trim());
+        this.categoriesService.setNameCategory(this.registerForm.controls.categoryName.value.trim());
+        this.categoriesService.getTregCategories(this.registerForm.controls.categoryName.value.trim());
         this.categories = {
             _id: this.registerForm.value._id,
             name: this.registerForm.value.categoryName.trim()
@@ -110,4 +110,5 @@ export class CategoriesFormComponent implements OnInit {
         this.errorSave = false; // Hide or save message
     }
     pageNexts(value) {}
+    pagePrevius(value) {}
 }

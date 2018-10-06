@@ -14,9 +14,10 @@ export class CategoriesService {
     nPag: any; // Number page
     selectedCategories = <any> Categories;
     categories: Categories[];
+    nameCategory: any;
     pagination: Pagination = { // initialize model
       skip: 1,
-      limit: 3,
+      limit: 4,
       tRegi: 0
     };
     headers: any;
@@ -25,6 +26,7 @@ export class CategoriesService {
     constructor(private http: HttpClient, public paginationService: PaginationsService) {
       this.headers = this.headerHttp();
       this.totalReg = 0;
+      this.setNameCategory('');
     }
     headerHttp() {
       return  new HttpHeaders()
@@ -33,7 +35,7 @@ export class CategoriesService {
     }
     // Get all category
     getCategories(categories: string) {
-        const skip = this.pagination.skip || 1;
+        const skip = this.paginationService.getSkip() || 1;
         const limit = this.pagination.limit || 10;
         this.headers = this.headerHttp();
         return this.http.get(this.URL_API + `/${categories} /${skip} /${limit}`)
@@ -45,11 +47,12 @@ export class CategoriesService {
             });
     }
     getTregCategories(categories: string) {
-      return this.http.get(this.URL_API_TREG + `/${categories}`)
+      return this.http.get(this.URL_API_TREG + `/${this.getNameCategory()}`)
         .subscribe(res => {
           this.setTotalReg(res);
           this.paginationService.setTotalReg(this.getTotalReg());
           this.paginationService.setpagLimit(this.pagination.limit);
+          this.paginationService.generetePagination();
           return this.getCategories(categories);
           });
   }
@@ -59,7 +62,7 @@ export class CategoriesService {
         this.http.post(this.URL_API + `/`, categories)
           .subscribe(res => {
             console.log('Create Register');
-            this.getCategories('');
+            this.getTregCategories('');
           });
     }
     // update category
@@ -67,7 +70,7 @@ export class CategoriesService {
         this.http.put(this.URL_API + `/${categories._id}`, categories)
           .subscribe(res => {
             console.log('Update Register');
-            this.getCategories('');
+            this.getTregCategories('');
           });
     }
     // delete category
@@ -75,7 +78,7 @@ export class CategoriesService {
         this.http.delete(this.URL_API + `/${_id}`)
           .subscribe(res => {
             console.log('Delete Register');
-            this.getCategories('');
+            this.getTregCategories('');
           });
     }
     setTotalReg(tReg) {
@@ -83,5 +86,15 @@ export class CategoriesService {
     }
     getTotalReg(): number {
       return this.pagination.tRegi;
+    }
+    getSkip() {
+      return this.paginationService.getSkip();
+    }
+
+    setNameCategory(name: any) {
+      this.nameCategory = name;
+    }
+    getNameCategory() {
+      return this.nameCategory;
     }
 }

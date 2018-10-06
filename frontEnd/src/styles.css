@@ -18,3 +18,7 @@
     font-weight: bold;
     text-align: start;
 }
+.active{
+    background: blue;
+    color: #fff;
+}
