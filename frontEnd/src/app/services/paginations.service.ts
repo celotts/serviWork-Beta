@@ -30,7 +30,6 @@ export class PaginationsService {
         return (this.skip);
     }
     previusPage() {
-      console.log(this.skip);
         if (this.skip > 1) {
           this.skip -= 1;
         } else {
