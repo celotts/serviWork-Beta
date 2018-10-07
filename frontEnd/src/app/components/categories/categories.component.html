@@ -1,15 +1,15 @@
 <!-- main app container -->
 <div class="container">
     <div class="jumbotron">
-        <div class="row">
+        <div class="row" >
             <div class="col-md-10 offset-md-1">
+                <!-- Titulo del form -->
                 <h2>Categorías</h2>
             </div>
             <div class="col-md-10 offset-md-1 baseGrid">
-                <app-categories-form [dataItem] = "categories"></app-categories-form>
-                <app-categories-grid (Datacategory) = 'selecciona($event)'  ></app-categories-grid>
+                <!-- Grid del formulario -->
+                <app-categories-grid></app-categories-grid>
             </div>
         </div>
-
     </div>
 </div>
