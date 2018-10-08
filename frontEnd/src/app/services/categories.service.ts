@@ -52,7 +52,7 @@ export class CategoriesService {
           this.setTotalReg(res);
           this.paginationService.setTotalReg(this.getTotalReg());
           this.paginationService.setpagLimit(this.pagination.limit);
-          this.paginationService.generetePagination();
+          this.paginationService.initPagination();
           return this.getCategories(categories);
           });
   }
