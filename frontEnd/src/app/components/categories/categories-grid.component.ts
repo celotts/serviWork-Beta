@@ -5,7 +5,6 @@ import { NgForm } from '@angular/forms';
 import { CategoriesFormComponent } from '../categories/categories-form.component';
 import { Pagination } from '../../models/pagination';
 import { PaginationsService } from '../../services/paginations.service';
-
 @Component({
     selector: 'app-categories-grid',
     templateUrl: './categories-grid/categories-grid.html',
@@ -25,7 +24,6 @@ export class CategoriesGridComponent implements OnInit {
         length: 0
     };
     pagination: Pagination;
-
     constructor(public categoriesService: CategoriesService, public paginationService: PaginationsService) {
         // Assign new model class the categories
         this.categoriesService.selectedCategories = new Categories();
