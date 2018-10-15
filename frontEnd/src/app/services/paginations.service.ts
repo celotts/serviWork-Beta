@@ -49,11 +49,8 @@ export class PaginationsService {
         return (this.skip);
     }
     pages(nPags) {
-        if (isNaN(nPags)) {
-            nPags = 1;
-        }
         this.setSkip(nPags);
-        console.log(nPags);
+        this.typeBtn = nPags;
     }
     setSkip(skip) {
         this.skip = skip;
@@ -111,7 +108,6 @@ export class PaginationsService {
                 this.cicloFor = this.roundValue(this.totalBtn) - 1;
             }
             for (let i = 0; i <= this.cicloFor; i++) {
-                console.log(i + '===' + this.cicloFor + '  ' + (this.nPags[this.nPags.length - 1] * 4) + '  ' + this.totalReg );
                 if (this.btnInitial > 0) {
                     this.nPags[0] = '<';
                     if (i === this.cicloFor && (this.nPags[this.nPags.length - 1] * 4) < this.totalReg) {

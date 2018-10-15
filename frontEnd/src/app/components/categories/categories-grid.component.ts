@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { CategoriesFormComponent } from '../categories/categories-form.component';
 import { Pagination } from '../../models/pagination';
 import { PaginationsService } from '../../services/paginations.service';
+import { ExcelService } from '../../services/excel.service';
 @Component({
     selector: 'app-categories-grid',
     templateUrl: './categories-grid/categories-grid.html',
@@ -23,8 +24,13 @@ export class CategoriesGridComponent implements OnInit {
         name : '',
         length: 0
     };
+    // struct data
+    data: any;
+    tableAux: any[];
+    element: HTMLElement;
     pagination: Pagination;
-    constructor(public categoriesService: CategoriesService, public paginationService: PaginationsService) {
+    constructor(public categoriesService: CategoriesService,
+        public paginationService: PaginationsService, private excelService: ExcelService) {
         // Assign new model class the categories
         this.categoriesService.selectedCategories = new Categories();
         // Search all categories
@@ -33,6 +39,26 @@ export class CategoriesGridComponent implements OnInit {
             limit: 10,
             tRegi: 0
         };
+        this.tableAux = [
+            {
+                nom: 'gsdfgsdfgsd',
+                cod: '878788745454544654646566464646',
+                mto: '895.225',
+                dte: '05/12/13'
+            },
+            {
+                nom: 'hjfghj',
+                cod: '84555',
+                mto: '1.225',
+                dte: '10/07/72'
+            },
+            {
+                nom: 'kjdsjasdl',
+                cod: '87447',
+                mto: '5.665',
+                dte: '10/11/74'
+            }
+        ];
     }
     ngOnInit() {
         // Call the function to the obtain all category records
@@ -63,8 +89,8 @@ export class CategoriesGridComponent implements OnInit {
             form.value._id = null;
         }
     }
-    getCategories() {
-        this.categoriesService.getTregCategories(this.categoriesService.getNameCategory());
+    getCategories(): any {
+            this.categoriesService.getTregCategories(this.categoriesService.getNameCategory());
     }
     resetForm(form?: NgForm) {
         // Reset Form
@@ -80,5 +106,9 @@ export class CategoriesGridComponent implements OnInit {
     }
     goPages() {
         this.getCategories();
+    }
+    ExportExcel() {
+        console.log(this.categoriesService.getCategoriesData());
+        this.excelService.exportAsExcelFile(document.getElementById('tableData'), 'pruebas');
     }
 }
