@@ -96,7 +96,7 @@ export class CategoriesFormComponent implements OnInit {
             name: this.registerForm.value.categoryName.trim()
         };
         // tslint:disable-next-line:quotemark
-        // this.categoriesService.getlikeCategories(this.categories.name);
+        // TODDo: Borrar.... this.categoriesService.getlikeCategories(this.categories.name); 
         this.errorSave = false; // Hide or save message
     }
     reset() {

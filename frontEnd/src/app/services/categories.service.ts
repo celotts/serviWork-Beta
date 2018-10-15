@@ -43,6 +43,7 @@ export class CategoriesService {
             this.categories = res as Categories[];
             this.pagination.tRegi = this.categories.length;
             this.setTotalReg(this.categories.length);
+            this.setCategoriesData(res);
             return categories;
             });
     }
@@ -52,7 +53,7 @@ export class CategoriesService {
           this.setTotalReg(res);
           this.paginationService.setTotalReg(this.getTotalReg());
           this.paginationService.setpagLimit(this.pagination.limit);
-          this.paginationService.generetePagination();
+          this.paginationService.initPagination();
           return this.getCategories(categories);
           });
   }
@@ -96,5 +97,11 @@ export class CategoriesService {
     }
     getNameCategory() {
       return this.nameCategory;
+    }
+    setCategoriesData(data) {
+      this.categories = data;
+    }
+    getCategoriesData() {
+      return this.categories;
     }
 }

@@ -1,4 +1,8 @@
 <app-categories-form (pageNext)='pageNexts($event)'></app-categories-form>
+<<<<<<< HEAD
+<div class="btn btn-sm btn-primary" (click)="ExportExcel()">Exportar</div>
+=======
+>>>>>>> master
 <div *ngIf="categoriesService.getTotalReg() >0">
     <div class="row" *ngFor = "let item of categoriesService.categories"> 
         <div  class="col-md-10">
@@ -22,6 +26,27 @@
 <div *ngIf="categoriesService.getTotalReg() == 0">
     No hay resgitro a mostrar ...
 </div>
+<<<<<<< HEAD
+<table id="tableData" name="tableData">
+    <thead>
+        <tr>
+            <td s="3">Nombre</td>
+            <td>codigo</td>
+            <td>Monto</td>
+            <td>Fecha</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let item of tableAux">
+            <td>{{item.nom}}</td>
+            <td class="text-left" t="s">{{item.cod}}</td>
+            <td class="text-right" t="n">{{item.mto}}</td>
+            <td class="text-right" t="d">{{item.dte}}</td>
+        </tr>
+    </tbody>
+</table>
+=======
+>>>>>>> master
 <!-- Formulario -->
 <app-paginations 
     [cantReg]="categoriesService.categories"
