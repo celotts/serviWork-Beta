@@ -1,5 +1,8 @@
 <app-categories-form (pageNext)='pageNexts($event)'></app-categories-form>
+<<<<<<< HEAD
 <div class="btn btn-sm btn-primary" (click)="ExportExcel()">Exportar</div>
+=======
+>>>>>>> master
 <div *ngIf="categoriesService.getTotalReg() >0">
     <div class="row" *ngFor = "let item of categoriesService.categories"> 
         <div  class="col-md-10">
@@ -23,6 +26,7 @@
 <div *ngIf="categoriesService.getTotalReg() == 0">
     No hay resgitro a mostrar ...
 </div>
+<<<<<<< HEAD
 <table id="tableData" name="tableData">
     <thead>
         <tr>
@@ -41,6 +45,8 @@
         </tr>
     </tbody>
 </table>
+=======
+>>>>>>> master
 <!-- Formulario -->
 <app-paginations 
     [cantReg]="categoriesService.categories"
